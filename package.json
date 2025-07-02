@@ -1,0 +1,26 @@
+{
+  "name": "mern-real-eatate-project",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev" : "nodemon api/index.js",
+    "start":"node api/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahnoormeher/RealEstate-MarketPlace.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mahnoormeher/RealEstate-MarketPlace/issues"
+  },
+  "homepage": "https://github.com/mahnoormeher/RealEstate-MarketPlace#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
