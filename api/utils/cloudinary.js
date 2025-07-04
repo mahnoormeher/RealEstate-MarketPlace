@@ -9,11 +9,11 @@ import { v2 as cloudinary } from 'cloudinary';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
 
 
-console.log("🔍 Cloudinary Env:", {
-  name: process.env.CLOUDINARY_CLOUD_NAME,
-  key: process.env.CLOUDINARY_API_KEY,
-  secret: process.env.CLOUDINARY_API_SECRET ? '✅ LOADED' : '❌ MISSING',
-});
+//console.log("🔍 Cloudinary Env:", {
+ // name: process.env.CLOUDINARY_CLOUD_NAME,
+ // key: process.env.CLOUDINARY_API_KEY,
+ // secret: process.env.CLOUDINARY_API_SECRET ? '✅ LOADED' : '❌ MISSING',
+//});
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
