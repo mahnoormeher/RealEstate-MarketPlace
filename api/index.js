@@ -3,6 +3,9 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv';
 import userRouter from './routes/user.route.js'
 import authRouter from './routes/auth.route.js'
+import uploadRouter from './routes/upload.route.js';
+
+
 dotenv.config();
 
 mongoose.connect(process.env.MONGO).then(()=>{
@@ -21,6 +24,9 @@ console.log('Server is running on PORT 3000!!');
 
 app.use('/api/user',userRouter);
 app.use('/api/auth', authRouter);
+
+app.use('/api/upload', uploadRouter);
+
 
 //middleware
 app.use((err,req,res,next)=>{
