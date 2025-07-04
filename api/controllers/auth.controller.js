@@ -45,8 +45,7 @@ export const google = async (req, res, next) => {
     if (user) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       const { password: pass, ...rest } = user._doc;
-
-      return res
+      res
         .cookie("access_token", token, { httpOnly: true })
         .status(200)
         .json(rest);
@@ -62,14 +61,13 @@ export const google = async (req, res, next) => {
           Math.random().toString(36).slice(-4),
         email: req.body.email,
         password: hashedPassword,
-        avatar: req.body.photo,
+        avatar: req.body.photo, // ✅ correctly storing Google photo URL
       });
 
-      await newUser.save();
+      const savedUser = await newUser.save(); // ✅ save & use this
 
-      // ✅ FIXED: use newUser._id here
-      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
-      const { password: pass, ...rest } = newUser._doc;
+      const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET); // ✅ use savedUser, not user
+      const { password: pass, ...rest } = savedUser._doc;
 
       res
         .cookie("access_token", token, { httpOnly: true })
@@ -80,3 +78,4 @@ export const google = async (req, res, next) => {
     next(error);
   }
 };
+
