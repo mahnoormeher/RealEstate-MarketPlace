@@ -168,7 +168,7 @@ try {
           placeholder='email'
           id='email'
           className='border p-3 rounded-lg'
-          defaultValue={currentUser.email || ''}
+        defaultValue={currentUser.email || ''}
           onChange={handleChange}
         />
         <input
