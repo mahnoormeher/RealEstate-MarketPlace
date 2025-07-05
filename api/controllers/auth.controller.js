@@ -69,10 +69,15 @@ export const google = async (req, res, next) => {
       const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET); // ✅ use savedUser, not user
       const { password: pass, ...rest } = savedUser._doc;
 
-      res
-        .cookie("access_token", token, { httpOnly: true })
-        .status(200)
-        .json(rest);
+   res
+  .cookie("access_token", token, {
+    httpOnly: true,
+    secure: false,        // ✅ false for localhost, true for production (HTTPS)
+    sameSite: 'Lax',      // ✅ Lax works fine for same-origin (localhost)
+  })
+  .status(200)
+  .json(rest);
+
     }
   } catch (error) {
     next(error);

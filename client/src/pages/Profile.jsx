@@ -1,15 +1,19 @@
 import React, { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { signInSuccess } from '../redux/user/userSlice';
+import { updateUserStart , updateUserSuccess, updateUserFailure} from '../redux/user/userSlice';
 
 export default function Profile() {
   const fileRef = useRef(null);
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser,loading,error } = useSelector((state) => state.user);
 
   const [avatar, setAvatar] = useState(currentUser.avatar); // local avatar
   const [uploading, setUploading] = useState(false);
 const [uploadSuccess, setUploadSuccess] = useState(false);
+const [updateSuccess , setUpdateSuucess] = useState(false);
+const [formData, setFormData] = useState({});
+//console.log(formData)
 
 
 const handleImageUpload = async (e) => {
@@ -36,6 +40,8 @@ const handleImageUpload = async (e) => {
     setAvatar(data.imageUrl); // ✅ update avatar immediately
     setAvatar(data.imageUrl);
 dispatch(signInSuccess({ ...currentUser, avatar: data.imageUrl }));
+localStorage.setItem('currentUser', JSON.stringify({ ...currentUser, avatar: data.imageUrl }));
+
 setUploadSuccess(true);
 
     setUploadSuccess(true);
@@ -51,14 +57,47 @@ setUploadSuccess(true);
 };
 
 
+const handleChange = (e) => {
+  setFormData({ ...formData, [e.target.id]: e.target.value });
+};
 
 
+const handleSubmit = async(e)=>{
+  e.preventDefault();
+  try {
+    dispatch(updateUserStart());
+    const res = await fetch(`/api/user/update/${currentUser._id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+     credentials: 'include',
+      body: JSON.stringify({...formData,avatar}),
+    });
+
+    const data = await res.json();
+    if(data.success===false){
+      dispatch(updateUserFailure(data.message));
+      return;
+    }
+
+    dispatch(updateUserSuccess(data));
+   setUpdateSuucess(true);
+   setTimeout(() => {
+  setUpdateSuucess(false);
+}, 3000);
+    localStorage.setItem('currentUser', JSON.stringify(data));
+
+  } catch (error) {
+    dispatch(updateUserFailure(error.message));
+  }
+}
 
 
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center my-7 text-blue-800'>Profile</h1>
-      <form className='flex flex-col gap-4'>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input
           type='file'
           onChange={handleImageUpload}
@@ -85,6 +124,7 @@ setUploadSuccess(true);
           id='username'
           className='border p-3 rounded-lg'
           defaultValue={currentUser.username}
+          onChange={handleChange}
         />
         <input
           type='email'
@@ -92,21 +132,25 @@ setUploadSuccess(true);
           id='email'
           className='border p-3 rounded-lg'
           defaultValue={currentUser.email}
+          onChange={handleChange}
         />
         <input
-          type='text'
+          type='password'
           placeholder='password'
           id='password'
           className='border p-3 rounded-lg'
+          onChange={handleChange}
         />
-        <button className='bg-blue-800 text-white rounded-lg p-3 uppercase hover:opacity-85 disabled:opacity-70'>
-          Update
+        <button disabled={loading} type='submit' className='bg-blue-800 text-white rounded-lg p-3 uppercase hover:opacity-85 disabled:opacity-70'>
+          {loading ? 'Loading...' : 'Update'}
         </button>
       </form>
       <div className='flex justify-between mt-5'>
         <span className='text-red-700 cursor-pointer'>Delete Account</span>
-        <span className='text-red-700 cursor-pointer'>Sign Out</span>
+        <span className='text-blue-700 cursor-pointer'>Sign Out</span>
       </div>
+      <p className='text-red-700 mt-5'>{error? error:''}</p>
+      <p className='text-green-600 font-bold mt-5'>{updateSuccess ? 'User is created successfully!' : ''}</p>
     </div>
   );
 }
