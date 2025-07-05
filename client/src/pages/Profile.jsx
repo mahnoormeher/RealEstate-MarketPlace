@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { signInSuccess } from '../redux/user/userSlice';
+import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signInSuccess } from '../redux/user/userSlice';
 import { updateUserStart , updateUserSuccess, updateUserFailure} from '../redux/user/userSlice';
 
 export default function Profile() {
@@ -11,7 +11,7 @@ export default function Profile() {
   const [avatar, setAvatar] = useState(currentUser.avatar); // local avatar
   const [uploading, setUploading] = useState(false);
 const [uploadSuccess, setUploadSuccess] = useState(false);
-const [updateSuccess , setUpdateSuucess] = useState(false);
+const [updateSuccess , setUpdateSuccess] = useState(false);
 const [formData, setFormData] = useState({});
 //console.log(formData)
 
@@ -48,7 +48,7 @@ setUploadSuccess(true);
 
     setTimeout(() => {
       setUploadSuccess(false);
-    }, 3000);
+    }, 4000);
   } catch (error) {
     console.error('Upload failed', error);
   } finally {
@@ -82,14 +82,36 @@ const handleSubmit = async(e)=>{
     }
 
     dispatch(updateUserSuccess(data));
-   setUpdateSuucess(true);
+   setUpdateSuccess(true);
    setTimeout(() => {
-  setUpdateSuucess(false);
+  setUpdateSuccess(false);
 }, 3000);
     localStorage.setItem('currentUser', JSON.stringify(data));
 
   } catch (error) {
     dispatch(updateUserFailure(error.message));
+  }
+}
+
+const handleDeleteUser = async()=>{
+  try {
+    dispatch(deleteUserStart());
+     const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+      method: 'DELETE',
+     credentials: 'include',
+    });
+
+    const data = await res.json();
+    if(data.success===false){
+      dispatch(deleteUserFailure(err.message));
+      return;
+    }
+
+    dispatch(deleteUserSuccess(data));
+   
+    localStorage.removeItem('currentUser');
+  } catch (error) {
+    dispatch(deleteUserFailure(error.message))
   }
 }
 
@@ -131,7 +153,7 @@ const handleSubmit = async(e)=>{
           placeholder='email'
           id='email'
           className='border p-3 rounded-lg'
-          defaultValue={currentUser.email}
+          defaultValue={currentUser.email || ''}
           onChange={handleChange}
         />
         <input
@@ -146,11 +168,11 @@ const handleSubmit = async(e)=>{
         </button>
       </form>
       <div className='flex justify-between mt-5'>
-        <span className='text-red-700 cursor-pointer'>Delete Account</span>
+        <span  onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete Account</span>
         <span className='text-blue-700 cursor-pointer'>Sign Out</span>
       </div>
       <p className='text-red-700 mt-5'>{error? error:''}</p>
-      <p className='text-green-600 font-bold mt-5'>{updateSuccess ? 'User is created successfully!' : ''}</p>
+      <p className='text-green-600 font-bold mt-5'>{updateSuccess ? 'User is updated successfully!' : ''}</p>
     </div>
   );
 }
