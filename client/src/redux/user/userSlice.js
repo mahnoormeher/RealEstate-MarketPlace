@@ -49,10 +49,23 @@ state.error = null;
             state.error = action.payload;
             state.loading= false;
         },
+          signoutUserStart : (state) =>{
+            state.loading = true;
+        },
+        signoutUserSuccess : (state,action)=>{
+state.currentUser = null;
+state.loading= false;
+state.error = null;
+
+        },
+        signoutUserFailure : (state , action)=>{
+            state.error = action.payload;
+            state.loading= false;
+        },
 
     }
 })
 
-export const {deleteUserFailure,deleteUserStart,deleteUserSuccess, signInStart , signInSuccess , signInFailure , updateUserStart,updateUserSuccess,updateUserFailure} = userSlice.actions;
+export const {signoutUserFailure,signoutUserStart,signoutUserSuccess,deleteUserFailure,deleteUserStart,deleteUserSuccess, signInStart , signInSuccess , signInFailure , updateUserStart,updateUserSuccess,updateUserFailure} = userSlice.actions;
 
 export default userSlice.reducer;

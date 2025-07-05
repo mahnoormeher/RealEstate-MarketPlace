@@ -72,8 +72,8 @@ export const google = async (req, res, next) => {
    res
   .cookie("access_token", token, {
     httpOnly: true,
-    secure: false,        // ✅ false for localhost, true for production (HTTPS)
-    sameSite: 'Lax',      // ✅ Lax works fine for same-origin (localhost)
+    secure: false,        
+    sameSite: 'Lax',      
   })
   .status(200)
   .json(rest);
@@ -83,4 +83,14 @@ export const google = async (req, res, next) => {
     next(error);
   }
 };
+
+export const signout = async (req , res , next)=>{
+  try {
+    res.clearCookie('access_token');
+    res.status(200).json('User has been logged out!');
+  } catch (error) {
+    next(error);
+  }
+}
+
 
