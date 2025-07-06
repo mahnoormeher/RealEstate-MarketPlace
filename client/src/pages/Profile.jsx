@@ -182,7 +182,7 @@ try {
         <button disabled={loading} type='submit' className='bg-blue-800 text-white rounded-lg p-3 uppercase hover:opacity-85 disabled:opacity-70'>
           {loading ? 'Loading...' : 'Update'}
         </button>
-        <Link className='text-white p-3 rounded-lg text-center bg-green-600 uppercase hover:opacity-85' to={'/create-listing'}>Create Listing</Link>
+        <Link className='text-white p-3 rounded-lg text-center bg-purple-800 uppercase hover:opacity-85' to={'/create-listing'}>Create Listing</Link>
       </form>
       <div className='flex justify-between mt-5'>
         <span  onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete Account</span>
