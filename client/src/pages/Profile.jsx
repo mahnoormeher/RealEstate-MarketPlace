@@ -3,10 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signInSuccess, signoutUserFailure, signoutUserStart, signoutUserSuccess } from '../redux/user/userSlice';
 import { updateUserStart , updateUserSuccess, updateUserFailure} from '../redux/user/userSlice';
 import {Link} from 'react-router-dom';
+//import { useLocation } from 'react-router-dom';
+
 
 export default function Profile() {
   const fileRef = useRef(null);
   const dispatch = useDispatch();
+  //const location = useLocation();
+
   const { currentUser,loading,error } = useSelector((state) => state.user);
 
   const [avatar, setAvatar] = useState(currentUser.avatar); // local avatar
@@ -147,7 +151,12 @@ if(data.success ===false){
   showListingsError(true);
   return;
 }
-setUserListings(data);
+//console.log("Listings:", data)
+//console.log("User Listings: ", data);
+    //console.log("Is Array: ", Array.isArray(data));
+    setUserListings(data);
+
+
   } catch (error) {
     setShowListingsError(true);
   }
@@ -246,7 +255,9 @@ const handleListingDelete = async(listingId) => {
        </Link>
        <div className='flex flex-col items-center'>
           <button onClick={() => handleListingDelete(listing._id)} className='text-red-700 uppercase'>Delete</button>
+        <Link to={`/update-listing/${listing._id}`}>
           <button className='text-green-600 uppercase'>Edit</button>
+          </Link>
        </div>
     </div>
 ))
