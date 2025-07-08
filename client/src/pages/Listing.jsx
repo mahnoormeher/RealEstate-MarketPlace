@@ -107,7 +107,7 @@ console.log("Check:", String(listing?.userRef) !== String(currentUser?._id));
               </p>
               {listing.offer && (
                 <p className="bg-blue-800 w-full max-w-[200px] text-white text-center p-1 rounded-md">
-                  ${+listing.regularPrice - +listing.discountPrice}
+                  ${+listing.regularPrice - +listing.discountPrice} OFF
                 </p>
               )}
             </div>
