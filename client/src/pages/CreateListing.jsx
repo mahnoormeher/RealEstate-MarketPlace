@@ -28,7 +28,7 @@ export default function CreateListing() {
   });
 
   //console.log(files)
-  console.log(formData);
+  //console.log(formData);
   const handleImageSubmit = async (e) => {
     e.preventDefault();
     if (files.length < 1 || files.length > 6) {
