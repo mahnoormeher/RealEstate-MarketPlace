@@ -56,12 +56,14 @@ setFormData(
           placeholder="email"
           className="border p-3 rounded-lg"
           id="email" onChange={handleChange}
+          autoComplete="off"
         />
         <input
           type="password"
           placeholder="password"
           className="border p-3 rounded-lg"
           id="password" onChange={handleChange}
+          autoComplete="off"
         />
         <button disabled={loading} className="bg-blue-800 text-white p-3
         rounded-lg uppercase hover:opacity-85 disabled:opacity-70">{loading ? 'Loading...' : 'Sign In'}</button>
