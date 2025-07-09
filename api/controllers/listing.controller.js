@@ -73,37 +73,45 @@ export const getListings = async (req, res, next) => {
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
 
-    let offer = req.query.offer;
-    if (offer === undefined || offer === 'false') {
-      offer = { $in: [false, true] };
+    const filters = {};
+
+    // Offer filter
+    if (req.query.offer === 'true') {
+      filters.offer = true;
+    } else if (req.query.offer === 'false') {
+      filters.offer = false;
     }
 
-    let furnished = req.query.furnished;
-    if (furnished === undefined || furnished === 'false') {
-      furnished = { $in: [false, true] };
+    // Furnished filter
+    if (req.query.furnished === 'true') {
+      filters.furnished = true;
+    } else if (req.query.furnished === 'false') {
+      filters.furnished = false;
     }
 
-    let parking = req.query.parking;
-    if (parking === undefined || parking === 'false') {
-      parking = { $in: [false, true] };
+    // Parking filter
+    if (req.query.parking === 'true') {
+      filters.parking = true;
+    } else if (req.query.parking === 'false') {
+      filters.parking = false;
     }
 
-    let type = req.query.type;
-    if (type === undefined || type === 'all') {
-      type = { $in: ['sale', 'rent'] };
+    // Type filter
+    if (req.query.type && req.query.type !== 'all') {
+      filters.type = req.query.type;
     }
 
+    // Search
     const searchItem = req.query.searchItem || '';
-    const sort = req.query.sort || 'createdAt';
-    const order = req.query.order || 'desc';
+    if (searchItem) {
+      filters.name = { $regex: searchItem, $options: 'i' };
+    }
 
-    const listings = await Listing.find({
-      name: { $regex: searchItem, $options: 'i' },
-      offer,
-      furnished,
-      parking,
-      type,
-    })
+    // Sorting
+    const sort = req.query.sort || 'createdAt';
+    const order = req.query.order === 'asc' ? 1 : -1;
+
+    const listings = await Listing.find(filters)
       .sort({ [sort]: order })
       .limit(limit)
       .skip(startIndex);
@@ -113,3 +121,4 @@ export const getListings = async (req, res, next) => {
     next(error);
   }
 };
+
