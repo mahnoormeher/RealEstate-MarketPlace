@@ -50,8 +50,8 @@ export default function Home() {
     <div>
       {/* top */}
  <div className='flex flex-col gap-6 p-28 px-3 max-w-6xl mx-auto'>
-        <h1 className='text-blue-800 font-bold text-3xl lg:text-6xl'>
-          Find your<span className='text-blue-600'> perfect and  dream</span>
+        <h1 className='text-blue-600 font-bold text-3xl lg:text-5xl'>
+          Find your next<span className='text-blue-800'> perfect </span>
           <br />
           home with ease
         </h1> 

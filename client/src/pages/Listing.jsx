@@ -20,6 +20,8 @@ export default function Listing() {
   const [ contact ,setContact] = useState(false);
   const params = useParams();
   const {currentUser} = useSelector((state) => state.user);
+ 
+
 
   useEffect(() => {
     const fetchListing = async () => {
