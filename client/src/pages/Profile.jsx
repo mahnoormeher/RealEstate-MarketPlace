@@ -33,8 +33,10 @@ const handleImageUpload = async (e) => {
     setUploading(true);
     setUploadSuccess(false);
 
-    const res = await fetch('/api/upload', {
+   const res = await fetch('https://real-estate-market-place-ten.vercel.app/api/upload', {
+
       method: 'POST',
+      credentials: 'include',
       body: formData,
     });
 
@@ -76,10 +78,10 @@ const handleSubmit = async(e)=>{
     dispatch(updateUserStart());
     const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/user/update/${currentUser._id}`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
-     credentials: 'include',
       body: JSON.stringify({...formData,avatar}),
     });
 
@@ -126,7 +128,9 @@ const handleDeleteUser = async()=>{
 const handleSignOut= async()=>{
 try {
   dispatch(signoutUserStart());
-  const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/auth/signout`);
+  const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/auth/signout`,{
+    credentials: 'include',
+  });
   const data = await res.json();
   if(data.success===false){
     dispatch(signoutUserFailure(data.message));

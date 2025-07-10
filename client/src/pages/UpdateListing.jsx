@@ -34,7 +34,9 @@ export default function CreateListing() {
 useEffect(()=>{
     const fetchListing = async()=>{
 const listingId = params.listingId;
-const res= await fetch(`https://real-estate-market-place-ten.vercel.app/api/listing/get/${listingId}`);
+const res= await fetch(`https://real-estate-market-place-ten.vercel.app/api/listing/get/${listingId}`,{
+  credentials: "include",
+});
 const data = await res.json();
 if(data.success===false){
     console.log(data.message);
@@ -82,6 +84,7 @@ setImageUrls(data.imageUrls || []);
       fetch("https://api.cloudinary.com/v1_1/dhgis4vd0/image/upload", {
         method: "POST",
         body: formData,
+        credentials: "include",
       })
         .then((res) => res.json())
         .then((data) => resolve(data.secure_url))
@@ -123,6 +126,7 @@ setImageUrls(data.imageUrls || []);
       setErr(false);
       const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/listing/update/${params.listingId}`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
