@@ -103,7 +103,7 @@ export default function CreateListing() {
         return setErr("Discount price must be lower than regular price.");
       setLoading(true);
       setErr(false);
-      const res = await fetch("/api/listing/create", {
+      const res = await fetch("https://real-estate-market-place-ten.vercel.app/api/listing/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -34,7 +34,7 @@ export default function CreateListing() {
 useEffect(()=>{
     const fetchListing = async()=>{
 const listingId = params.listingId;
-const res= await fetch(`/api/listing/get/${listingId}`);
+const res= await fetch(`https://real-estate-market-place-ten.vercel.app/api/listing/get/${listingId}`);
 const data = await res.json();
 if(data.success===false){
     console.log(data.message);
@@ -121,7 +121,7 @@ setImageUrls(data.imageUrls || []);
         return setErr("Discount price must be lower than regular price.");
       setLoading(true);
       setErr(false);
-      const res = await fetch(`/api/listing/update/${params.listingId}`, {
+      const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/listing/update/${params.listingId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
