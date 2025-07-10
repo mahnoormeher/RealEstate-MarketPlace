@@ -44,11 +44,14 @@ app.use('/api/auth', authRouter);
 app.use('/api/listing',listingRouter);
 app.use('/api/upload', uploadRouter);
 
-app.use(express.static(path.join(__dirname, '/client/dist')));
+// Serve static files from React
+app.use(express.static(path.join(__dirname, '../client/dist')));
 
-app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+// Catch-all route for React
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client', 'dist', 'index.html'));
 });
+
 
 
 
