@@ -25,8 +25,8 @@ mongoose.connect(process.env.MONGO).then(()=>{
 const app=express();
 
 app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true
+  origin: 'https://reale-state-website.netlify.app',
+  credentials: true,
 }));
 
 app.use(express.json());
