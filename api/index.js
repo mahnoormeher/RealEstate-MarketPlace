@@ -14,6 +14,7 @@ const __dirname = path.resolve();
 dotenv.config();
 
 mongoose.connect(process.env.MONGO).then(()=>{
+
     console.log('Connected to MongoDB');
 }).catch((err)=>{
     console.log(err);
@@ -36,6 +37,8 @@ app.use(cookieParser());
 app.listen(3000, ()=>{
 console.log('Server is running on PORT 3000!!');
 })
+//console.log("Mongo URI is:", process.env.MONGO);
+
 
 
 
