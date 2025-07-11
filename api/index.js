@@ -7,8 +7,8 @@ import uploadRouter from './routes/upload.route.js';
 import cookieParser from 'cookie-parser';
 import listingRouter from './routes/listing.route.js';
 import cors from 'cors';
-import path from 'path';
-const __dirname = path.resolve();
+//import path from 'path';
+//const __dirname = path.resolve();
 
 
 dotenv.config();
@@ -48,12 +48,12 @@ app.use('/api/listing',listingRouter);
 app.use('/api/upload', uploadRouter);
 
 // Serve static files from React
-app.use(express.static(path.join(__dirname, '../client/dist')));
+//app.use(express.static(path.join(__dirname, '../client/dist')));
 
 // Catch-all route for React
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client', 'dist', 'index.html'));
-});
+//app.get('*', (req, res) => {
+ // res.sendFile(path.join(__dirname, '../client', 'dist', 'index.html'));
+//});
 
 
 
