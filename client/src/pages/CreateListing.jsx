@@ -96,6 +96,9 @@ export default function CreateListing() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("formData:", formData); 
+  console.log("currentUser:", currentUser); 
+  console.log("currentUser._id:", currentUser?._id); 
     try {
       if (formData.imageUrls.length < 1)
         return setErr("You must upload atleast one image.");
@@ -112,7 +115,9 @@ export default function CreateListing() {
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
+          
         }),
+        
       });
       const data = await res.json();
       setLoading(false);
