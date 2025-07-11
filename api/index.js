@@ -62,6 +62,7 @@ app.get('*', (req, res) => {
 app.use((err,req,res,next)=>{
 const statusCode = err.statusCode || 500;
 const message = err.message || 'Internal Server Error';
+console.error(" Global error handler caught:", message); 
 return res.status(statusCode).json({
     success : false,
     statusCode,
