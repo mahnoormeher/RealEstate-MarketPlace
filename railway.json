@@ -2,6 +2,6 @@
   "build": {
     "builder": "NIXPACKS",
     "buildCommand": "cd api && npm install",
-    "startCommand": "cd api && npm run dev"
+    "startCommand": "cd api && npm start"
   }
 }
