@@ -70,46 +70,32 @@ export const getListing = async (req, res, next) => {
 
 export const getListings = async (req, res, next) => {
   try {
+    console.log("➡️ Query received:", req.query);  
+
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
 
     const filters = {};
 
-    // Offer filter
-    if (req.query.offer === 'true') {
-      filters.offer = true;
-    } else if (req.query.offer === 'false') {
-      filters.offer = false;
-    }
+    if (req.query.offer === 'true') filters.offer = true;
+    if (req.query.offer === 'false') filters.offer = false;
+    if (req.query.furnished === 'true') filters.furnished = true;
+    if (req.query.furnished === 'false') filters.furnished = false;
+    if (req.query.parking === 'true') filters.parking = true;
+    if (req.query.parking === 'false') filters.parking = false;
 
-    // Furnished filter
-    if (req.query.furnished === 'true') {
-      filters.furnished = true;
-    } else if (req.query.furnished === 'false') {
-      filters.furnished = false;
-    }
-
-    // Parking filter
-    if (req.query.parking === 'true') {
-      filters.parking = true;
-    } else if (req.query.parking === 'false') {
-      filters.parking = false;
-    }
-
-    // Type filter
     if (req.query.type && req.query.type !== 'all') {
       filters.type = req.query.type;
     }
 
-    // Search
     const searchItem = req.query.searchItem || '';
-    if (searchItem) {
-      filters.name = { $regex: searchItem, $options: 'i' };
-    }
+    if (searchItem) filters.name = { $regex: searchItem, $options: 'i' };
 
-    // Sorting
     const sort = req.query.sort || 'createdAt';
     const order = req.query.order === 'asc' ? 1 : -1;
+
+    console.log(" Final Filters:", filters);     
+    console.log(" Sort & Order:", sort, order);
 
     const listings = await Listing.find(filters)
       .sort({ [sort]: order })
@@ -118,7 +104,9 @@ export const getListings = async (req, res, next) => {
 
     return res.status(200).json(listings);
   } catch (error) {
+    console.error(" Error in getListings:", error);  
     next(error);
   }
 };
+
 
