@@ -3,7 +3,7 @@
   to = "https://realestate-marketplace.up.railway.app/api/:splat"
   status = 200
   force = true
-
-  [redirects.headers]
-    Access-Control-Allow-Origin = "https://reale-state-website.netlify.app"
+  headers = { 
+    Access-Control-Allow-Origin = "https://reale-state-website.netlify.app",
     Access-Control-Allow-Credentials = "true"
+  }
