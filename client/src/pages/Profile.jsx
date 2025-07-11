@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { deleteUserFailure, deleteUserStart, deleteUserSuccess, signInSuccess, signoutUserFailure, signoutUserStart, signoutUserSuccess } from '../redux/user/userSlice';
 import { updateUserStart , updateUserSuccess, updateUserFailure} from '../redux/user/userSlice';
 import {Link} from 'react-router-dom';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 //import { useLocation } from 'react-router-dom';
 
 
@@ -33,7 +35,8 @@ const handleImageUpload = async (e) => {
     setUploading(true);
     setUploadSuccess(false);
 
-   const res = await fetch('https://real-estate-market-place-ten.vercel.app/api/upload', {
+  const res = await fetch(`${API_BASE_URL}/api/upload`, {
+
 
       method: 'POST',
       credentials: 'include',
@@ -47,7 +50,7 @@ const handleImageUpload = async (e) => {
     }
 
     console.log('Uploaded URL:', data.imageUrl);
-    setAvatar(data.imageUrl); // ✅ update avatar immediately
+   
     setAvatar(data.imageUrl);
 dispatch(signInSuccess({ ...currentUser, avatar: data.imageUrl }));
 localStorage.setItem('currentUser', JSON.stringify({ ...currentUser, avatar: data.imageUrl }));
@@ -76,7 +79,8 @@ const handleSubmit = async(e)=>{
   e.preventDefault();
   try {
     dispatch(updateUserStart());
-    const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/user/update/${currentUser._id}`, {
+   const res = await fetch(`${API_BASE_URL}/api/user/update/${currentUser._id}`, {
+
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -106,7 +110,8 @@ const handleSubmit = async(e)=>{
 const handleDeleteUser = async()=>{
   try {
     dispatch(deleteUserStart());
-     const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/user/delete/${currentUser._id}`, {
+     const res = await fetch(`${API_BASE_URL}/api/user/delete/${currentUser._id}`, {
+
       method: 'DELETE',
      credentials: 'include',
     });
@@ -128,7 +133,8 @@ const handleDeleteUser = async()=>{
 const handleSignOut= async()=>{
 try {
   dispatch(signoutUserStart());
-  const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/auth/signout`,{
+ const res = await fetch(`${API_BASE_URL}/api/auth/signout`, {
+
     credentials: 'include',
   });
   const data = await res.json();
@@ -145,14 +151,15 @@ try {
 const handleShowListings = async()=>{
   try {
     setShowListingsError(false);
-    const res = await fetch (`https://real-estate-market-place-ten.vercel.app/api/user/listings/${currentUser._id}`,{
+    const res = await fetch(`${API_BASE_URL}/api/user/listings/${currentUser._id}`, {
+
        credentials: 'include',
     }
       
     );
 const data = await res.json();
 if(data.success ===false){
-  showListingsError(true);
+  setShowListingsError(true);
   return;
 }
 //console.log("Listings:", data)
@@ -168,7 +175,8 @@ if(data.success ===false){
 
 const handleListingDelete = async(listingId) => {
   try {
-    const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/listing/delete/${listingId}`,{
+    const res = await fetch(`${API_BASE_URL}/api/listing/delete/${listingId}`, {
+
       method : 'DELETE',
     })
     const data = await res.json();

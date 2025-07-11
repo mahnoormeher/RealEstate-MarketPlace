@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {useNavigate} from 'react-router-dom';
 import ListingItem from '../components/ListingItem';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function Search() {
   const navigate = useNavigate();
@@ -57,7 +58,9 @@ export default function Search() {
       setLoading(true);
       setShowMore(false);
       const searchQuery = urlParams.toString();
-      const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/listing/get?${searchQuery}`);
+      
+const res = await fetch(`${API_BASE_URL}/api/listing/get?${searchQuery}`);
+
       const data = await res.json();
       if (data.length > 8) {
         setShowMore(true);
@@ -127,7 +130,8 @@ export default function Search() {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set('startIndex', startIndex);
     const searchQuery = urlParams.toString();
-    const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/listing/get?${searchQuery}`);
+    const res = await fetch(`${API_BASE_URL}/api/listing/get?${searchQuery}`);
+
     const data = await res.json();
     if (data.length < 9) {
       setShowMore(false);

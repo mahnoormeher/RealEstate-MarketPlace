@@ -2,7 +2,7 @@ import { current } from "@reduxjs/toolkit";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate , useParams } from "react-router-dom";
-
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 export default function CreateListing() {
   const { currentUser } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export default function CreateListing() {
 useEffect(()=>{
     const fetchListing = async()=>{
 const listingId = params.listingId;
-const res= await fetch(`https://real-estate-market-place-ten.vercel.app/api/listing/get/${listingId}`,{
+const res= await fetch(`${API_BASE_URL}/api/listing/get/${listingId}`,{
   credentials: "include",
 });
 const data = await res.json();
@@ -124,7 +124,7 @@ setImageUrls(data.imageUrls || []);
         return setErr("Discount price must be lower than regular price.");
       setLoading(true);
       setErr(false);
-      const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/listing/update/${params.listingId}`, {
+       const res = await fetch(`${API_BASE_URL}/api/listing/update/${params.listingId}`, {
         method: "POST",
         credentials: "include",
         headers: {

@@ -3,6 +3,7 @@ import { Link , useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signInStart,signInSuccess,signInFailure } from "../redux/user/userSlice";
 import OAuth from "../components/OAuth";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function Signin() {
   const [formData, setFormData] =useState({})
@@ -21,7 +22,7 @@ setFormData(
     e.preventDefault();
     try {
       dispatch(signInStart());
-    const res= await fetch('https://real-estate-market-place-ten.vercel.app/api/auth/signin',
+     const res = await fetch(`${API_BASE_URL}/api/auth/signin`,
       {
         method: 'POST',
         headers: {

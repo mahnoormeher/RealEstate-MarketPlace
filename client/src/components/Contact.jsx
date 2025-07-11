@@ -11,7 +11,7 @@ export default function Contact({ listing }) {
   useEffect(() => {
     const fetchLandlord = async () => {
       try {
-        const res = await fetch(`https://real-estate-market-place-ten.vercel.app/api/user/${listing.userRef}`);
+       fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/${listing.userRef}`);
         const data = await res.json();
         setLandlord(data);
       } catch (error) {
