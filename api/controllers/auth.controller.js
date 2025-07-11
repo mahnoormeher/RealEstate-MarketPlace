@@ -61,18 +61,18 @@ export const google = async (req, res, next) => {
           Math.random().toString(36).slice(-4),
         email: req.body.email,
         password: hashedPassword,
-        avatar: req.body.photo, // ✅ correctly storing Google photo URL
+        avatar: req.body.photo, 
       });
 
-      const savedUser = await newUser.save(); // ✅ save & use this
+      const savedUser = await newUser.save(); 
 
-      const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET); // ✅ use savedUser, not user
+      const token = jwt.sign({ id: savedUser._id }, process.env.JWT_SECRET); 
       const { password: pass, ...rest } = savedUser._doc;
 
    res
   .cookie("access_token", token, {
     httpOnly: true,
-    secure: false,        
+    secure: true,        
     sameSite: 'None',      
   })
   .status(200)
