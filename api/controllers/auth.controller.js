@@ -74,7 +74,7 @@ export const google = async (req, res, next) => {
     httpOnly: true,
     secure: true,        
     sameSite: 'None',  
-    domain: ".netlify.app"    
+      
   })
   .status(200)
   .json(rest);
