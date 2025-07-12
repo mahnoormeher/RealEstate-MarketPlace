@@ -49,7 +49,7 @@ const handleImageUpload = async (e) => {
       throw new Error(data?.error || 'Upload failed');
     }
 
-    console.log('Uploaded URL:', data.imageUrl);
+   // console.log('Uploaded URL:', data.imageUrl);
    
     setAvatar(data.imageUrl);
 dispatch(signInSuccess({ ...currentUser, avatar: data.imageUrl }));
@@ -63,7 +63,7 @@ setUploadSuccess(true);
       setUploadSuccess(false);
     }, 4000);
   } catch (error) {
-    console.error('Upload failed', error);
+    //console.error('Upload failed', error);
   } finally {
     setUploading(false);
   }

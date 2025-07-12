@@ -70,7 +70,7 @@ export const getListing = async (req, res, next) => {
 
 export const getListings = async (req, res, next) => {
   try {
-    console.log("➡️ Query received:", req.query);  
+    //console.log("➡️ Query received:", req.query);  
 
     const limit = parseInt(req.query.limit) || 9;
     const startIndex = parseInt(req.query.startIndex) || 0;
@@ -94,8 +94,8 @@ export const getListings = async (req, res, next) => {
     const sort = req.query.sort || 'createdAt';
     const order = req.query.order === 'asc' ? 1 : -1;
 
-    console.log(" Final Filters:", filters);     
-    console.log(" Sort & Order:", sort, order);
+    //console.log(" Final Filters:", filters);     
+    //console.log(" Sort & Order:", sort, order);
 
     const listings = await Listing.find(filters)
       .sort({ [sort]: order })

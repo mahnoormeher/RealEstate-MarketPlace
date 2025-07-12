@@ -69,7 +69,7 @@ setImageUrls(data.imageUrls || []);
       setImageUrls(imageUrls);
       setFormData((prev) => ({ ...prev, imageUrls }));
     } catch (err) {
-      console.error("Image upload failed:", err);
+      //console.error("Image upload failed:", err);
       setError("Failed to upload images. Try again.");
     }
     setUploading(false);

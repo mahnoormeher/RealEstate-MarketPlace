@@ -46,9 +46,9 @@ export default function Listing() {
     fetchListing();
   }, [params.listingId]);
 
-  console.log("listing.userRef:", listing?.userRef);
-console.log("currentUser._id:", currentUser?._id);
-console.log("Check:", String(listing?.userRef) !== String(currentUser?._id));
+  //console.log("listing.userRef:", listing?.userRef);
+//console.log("currentUser._id:", currentUser?._id);
+//console.log("Check:", String(listing?.userRef) !== String(currentUser?._id));
 
 
   return (
