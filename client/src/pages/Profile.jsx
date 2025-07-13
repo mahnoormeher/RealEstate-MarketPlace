@@ -152,7 +152,6 @@ const handleShowListings = async()=>{
   try {
     setShowListingsError(false);
     const res = await fetch(`${API_BASE_URL}/api/user/listings/${currentUser._id}`, {
-
        credentials: 'include',
     }
       
@@ -178,6 +177,7 @@ const handleListingDelete = async(listingId) => {
     const res = await fetch(`${API_BASE_URL}/api/listing/delete/${listingId}`, {
 
       method : 'DELETE',
+      credentials: 'include',
     })
     const data = await res.json();
     if(data.success === false){
